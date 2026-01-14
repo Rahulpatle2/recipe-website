@@ -112,7 +112,7 @@ const SingleRecipe = () => {
 
   };
 
-  console.log(fav);
+  // console.log(fav);
 
   
 const DeleteHandler = async() => {
@@ -135,7 +135,8 @@ const DeleteHandler = async() => {
     <motion.div 
     initial={{x:-50}} animate={{x:0}} transition={{duration:1}}
     className='flex flex-col  lg:w-1/3 ml-5 gap-5 shadow p-5 relative'>
-      {user.favRecipes.find((f) =>
+    {user && (<div>
+        {user.favRecipes.find((f) =>
         f._id === id
       ) ? (
          <svg
@@ -170,6 +171,7 @@ const DeleteHandler = async() => {
       />
     </svg>
       )}
+      </div>) }  
       <img src={recipe.imageUrl} className='h-72 object-cover' />
       <p className='text-5xl font-black '>{recipe.title}</p>
       <p className='text-2xl font-bold text-red-500'>{recipe.chef}</p>
@@ -184,7 +186,7 @@ const DeleteHandler = async() => {
 
     {/* form to update the recipe or delete also */}
 
-    {user && (<motion.form
+    {user.isAuthor && (<motion.form
     initial={{x:50}} animate={{x:0}} transition={{duration:1}}
      onSubmit={handleSubmit(SubmitHandler)} className='flex flex-col m-8  gap-7 border p-12 lg:w-1/3 rounded shadow '>
       <h1 className='text-center text-3xl font-black pb-5'>Update Your Recipe</h1>

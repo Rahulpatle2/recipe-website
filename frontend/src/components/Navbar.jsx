@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { NavLink, Link, useNavigate } from 'react-router-dom'
-import { motion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 
 
 const Navbar = () => {
@@ -12,7 +12,7 @@ const Navbar = () => {
 
       
       {/* logo and hamburger */}
-      <div className='w-full lg:w-1/12 flex items-center justify-between '>
+      <div className='w-full lg:w-1/12 flex items-center justify-between relative'>
         <div className='text-2xl text-green-500 font-bold font-serif text-shadow-2xs'>
           FoodMountain
         </div>
@@ -20,6 +20,21 @@ const Navbar = () => {
           {toggle ? (<i className="fa-solid fa-xmark"></i>) : (<i className="fa-solid fa-bars w-28"></i>)}
 
         </div>
+        <AnimatePresence>
+          {toggle ? (<motion.div initial={{x:100}} animate={{x:0}}  transition={{duration:0.3}} exit={{x:300}}  onClick={() => setToggle(!toggle)} className='lg:hidden pt-6 fixed top-0 right-0 bg-gray-200 pl-10 z-100 w-1/3 h-screen flex flex-col gap-10 '>
+          <div className='w-full flex justify-end'>
+            <i className="fa-solid fa-xmark pr-10"></i>
+          </div>
+          <NavLink to='/' className={(e) => e.isActive ? 'text-red-500' : ""} >Home</NavLink>
+          <NavLink to='/about' className={(e) => e.isActive ? 'text-red-500' : ""} >About</NavLink>
+          <NavLink to='/favorite' className={(e) => e.isActive ? 'text-red-500' : ""}>Favorite</NavLink>
+          <NavLink to='/recipes' className={(e) => e.isActive ? 'text-red-500' : ""}>Recipes</NavLink>
+
+          <div className='h-1/2 flex flex-col justify-end'>
+            <Link className='font-semibold'>Logout</Link>
+          </div>
+        </motion.div>) : ""}
+        </AnimatePresence>
 
       </div>
 
@@ -36,13 +51,7 @@ const Navbar = () => {
         </div>
 
         
-          <motion.div initial={{scaleX:0}} animate={{scaleX:1}} transition={{duration:2}} className={`${toggle ? "flex" : "hidden"} flex-col w-full bg-gray-200 p-5 gap-2`}>
-            <NavLink to='/' className={(e) => e.isActive ? 'text-red-500' : ""} >Home</NavLink>
-            <NavLink to='/about' className={(e) => e.isActive ? 'text-red-500' : ""} >About</NavLink>
-            <NavLink to='/favorite' className={(e) => e.isActive ? 'text-red-500' : ""}>Favorite</NavLink>
-            <NavLink to='/recipes' className={(e) => e.isActive ? 'text-red-500' : ""}>Recipes</NavLink>
-          </motion.div>
-        
+          
 
       </div>
 
