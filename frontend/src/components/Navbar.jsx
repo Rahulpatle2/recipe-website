@@ -1,11 +1,25 @@
 import React, { useContext, useState } from 'react'
 import { NavLink, Link, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react';
+import AuthContext from '../context/AuthContext';
+import instance from '../config/config';
+import { toast } from 'react-toastify';
 
 
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
+  const {user} = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const logoutUser = async() =>{
+    try {
+      const res = await instance.post('/users/logout')
+  
+      toast.success("you are logged out");
+    } catch (error) {
+      toast.error("something went wrong")
+    }
+  }
   return (
 
     <div className='w-full p-5  lg:flex lg:items-center lg:justify-between '>
@@ -27,11 +41,11 @@ const Navbar = () => {
           </div>
           <NavLink to='/' className={(e) => e.isActive ? 'text-red-500' : ""} >Home</NavLink>
           <NavLink to='/about' className={(e) => e.isActive ? 'text-red-500' : ""} >About</NavLink>
-          <NavLink to='/favorite' className={(e) => e.isActive ? 'text-red-500' : ""}>Favorite</NavLink>
+         {user && ( <NavLink to='/favorite' className={(e) => e.isActive ? 'text-red-500' : ""}>Favorite</NavLink>)}
           <NavLink to='/recipes' className={(e) => e.isActive ? 'text-red-500' : ""}>Recipes</NavLink>
 
           <div className='h-1/2 flex flex-col justify-end'>
-            <Link className='font-semibold'>Logout</Link>
+           {user ?  (<Link onClick={() => logoutUser()} className='font-semibold'>Logout</Link>):(<Link to={'login'}>Login</Link>)}
           </div>
         </motion.div>) : ""}
         </AnimatePresence>
@@ -46,7 +60,7 @@ const Navbar = () => {
         <div className='hidden lg:flex gap-10 '>
           <NavLink to='/' className={(e) => e.isActive ? 'text-red-500' : ""} >Home</NavLink>
           <NavLink to='/about' className={(e) => e.isActive ? 'text-red-500' : ""} >About</NavLink>
-          <NavLink to='/favorite' className={(e) => e.isActive ? 'text-red-500' : ""}>Favorite</NavLink>
+          {user && (<NavLink to='/favorite' className={(e) => e.isActive ? 'text-red-500' : ""}>Favorite</NavLink>)}
           <NavLink to='/recipes' className={(e) => e.isActive ? 'text-red-500' : ""}>Recipes</NavLink>
         </div>
 
@@ -55,12 +69,23 @@ const Navbar = () => {
 
       </div>
 
-      <motion.button 
-      initial={{ y: 10 }}
-  animate={{ y: 0 }}
-  whileHover={{ scale: 1.1 }}
-  whileTap={{ scale: 0.9 }}
-       onClick={() => navigate('recipes/create-recipe')} className='cursor-pointer hidden lg:block px-2.5 py-1.5 rounded-md bg-blue-500 text-white shadow hover:border-blue-500 hover:text-blue-500 hover:bg-white '>Create</motion.button>
+      <div>
+       {!user && (<motion.button 
+          initial={{ y: 10 }}
+          animate={{ y: 0 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+       onClick={() => navigate('login')} className='cursor-pointer hidden lg:block px-2.5 py-1.5 rounded-md bg-blue-500 text-white shadow hover:border-blue-500 hover:text-blue-500 hover:bg-white '>Login</motion.button>)}
+      </div>
+      {user && (<div>
+      {user.isAuthor && (<motion.button 
+          initial={{ y: 10 }}
+          animate={{ y: 0 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+       onClick={() => navigate('recipes/create-recipe')} className='cursor-pointer hidden lg:block px-2.5 py-1.5 rounded-md bg-blue-500 text-white shadow hover:border-blue-500 hover:text-blue-500 hover:bg-white '>Create</motion.button>)}
+      </div>)}
+      
     </div>
   )
 }

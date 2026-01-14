@@ -186,7 +186,8 @@ const DeleteHandler = async() => {
 
     {/* form to update the recipe or delete also */}
 
-    {user.isAuthor && (<motion.form
+   {user && (<div>
+      {user.isAuthor && (<motion.form
     initial={{x:50}} animate={{x:0}} transition={{duration:1}}
      onSubmit={handleSubmit(SubmitHandler)} className='flex flex-col m-8  gap-7 border p-12 lg:w-1/3 rounded shadow '>
       <h1 className='text-center text-3xl font-black pb-5'>Update Your Recipe</h1>
@@ -222,6 +223,7 @@ const DeleteHandler = async() => {
 
       </div>
     </motion.form>)}
+    </div>)}
   </motion.div>) : ('...........Loading')
 }
 

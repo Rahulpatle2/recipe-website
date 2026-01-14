@@ -26,7 +26,7 @@ const MainRoutes = () => {
           <Route path='recipes' element={<Recipes />} ></Route>
           {user && <Route path='recipes/create-recipe' element={<Create />} ></Route>}
           <Route path='recipes/details/:id' element={<SingleRecipe />}></Route>
-          <Route path='favorite' element={<Favroite />} ></Route>
+         { user && (<Route path='favorite' element={<Favroite />} ></Route>)}
           <Route path='about' element={<About />} ></Route>
           <Route path='signup' element={<SignUp/>} ></Route>
           <Route path='login' element={<Login/>}></Route>

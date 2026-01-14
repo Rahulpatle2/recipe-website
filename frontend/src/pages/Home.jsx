@@ -57,7 +57,7 @@ const Home = () => {
         <p className='text-base text-gray-600 max-w-2xl font-light'>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam nemo maiores atque corporis eum, officia quasi rem alias perspiciatis, quo harum, ea dolores? Hic.
         </p>
-        {user.isAuthor && (<Link to='/recipes/create-recipe'>
+        {/* {user.isAuthor && (<Link to='/recipes/create-recipe'>
           <motion.button 
           initial={{opacity:0 ,y:50,scale:1}}
           transition={{duration:1}}
@@ -66,7 +66,7 @@ const Home = () => {
            className='bg-green-500 text-white px-6 py-2 rounded font-medium transition-all duration-300 border border-transparent hover:bg-white hover:text-green-500 hover:border-green-500 shadow-md'>
             Create Recipe
           </motion.button>
-        </Link>)}
+        </Link>)} */}
       </motion.div>
     </div>
   )

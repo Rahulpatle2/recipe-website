@@ -18,10 +18,10 @@ app.use(cors({
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"]
 }));
 
-// app.use(cors({
-//     origin:"http://localhost:5173",
-//     credentials:true
-// }))
+app.use(cors({
+    origin:"http://localhost:5173",
+    credentials:true
+}))
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
