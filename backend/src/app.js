@@ -11,17 +11,17 @@ import cors from "cors"
 const app = express();
 dotenv.config();
 
-// app.use(cors({
-//     origin: process.env.CLIENT_URL,
-//     credentials: true,
-//     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-//     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"]
-// }));
-
 app.use(cors({
-    origin:"http://localhost:5173",
-    credentials:true
-}))
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"]
+}));
+
+// app.use(cors({
+//     origin:"http://localhost:5173",
+//     credentials:true
+// }))
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
