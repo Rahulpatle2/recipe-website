@@ -5,7 +5,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 
 const RecipeContextProvider = ({children}) => {
     const [data,setData] = useState([]);
-    const [fav,setFav] = useState([]);
+    
     const [isLoading,setIsLoading] = useState(true)
 
     useEffect(() =>{
@@ -30,7 +30,7 @@ const RecipeContextProvider = ({children}) => {
     }
     console.log(data)
   return (
-    <RecipeContext.Provider value={{data,setData,fav,setFav}}>
+    <RecipeContext.Provider value={{data,setData}}>
         {children}
     </RecipeContext.Provider>
   )

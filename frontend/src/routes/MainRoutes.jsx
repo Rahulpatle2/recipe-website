@@ -24,9 +24,9 @@ const MainRoutes = () => {
         <Route path='/' element={<Layout />} >
           <Route index element={<Home/>}/>
           <Route path='recipes' element={<Recipes />} ></Route>
-          {user && <Route path='recipes/create-recipe' element={<Create />} ></Route>}
+          {user?.isAuthor && <Route path='create-recipe' element={<Create />} ></Route>}
           <Route path='recipes/details/:id' element={<SingleRecipe />}></Route>
-         { user && (<Route path='favorite' element={<Favroite />} ></Route>)}
+         { (user || !user?.isAuthor) && (<Route path='favorite' element={<Favroite />} ></Route>)}
           <Route path='about' element={<About />} ></Route>
           <Route path='signup' element={<SignUp/>} ></Route>
           <Route path='login' element={<Login/>}></Route>

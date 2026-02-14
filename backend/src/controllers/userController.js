@@ -146,6 +146,8 @@ export const removeFavoriteRecipeController = async(req,res) =>{
   try {
     const userId =  req.user._id;
     const recipeId = req.params.id;
+    console.log(userId);
+    console.log(recipeId)
   
     if(!recipeId){
       return res.status(400).json({message:"recipeId is required"});
@@ -155,6 +157,7 @@ export const removeFavoriteRecipeController = async(req,res) =>{
       {$pull: { favRecipes:recipeId }},
       {new:true}
     );
+    
   
     if (!updatedUser) {
         return res.status(404).json({ message: "User not found" });
@@ -164,6 +167,7 @@ export const removeFavoriteRecipeController = async(req,res) =>{
         message: "Recipe removed to favorites!",
         favorites: updatedUser.favRecipes 
       });
+      console.log("chali")
   
   } catch (error) {
      console.error("remove Favorite Error:", error);

@@ -5,6 +5,7 @@ import instance from '../config/config';
 const AuthContextProvider = ({children}) => {
     const [user,setUser] = useState()
     const [isAuthenticated,setIsAuthenticated] = useState(false);
+    const [fav,setFav] = useState([]);
 
     useEffect(() => {
         const loadUser = async() =>{
@@ -13,6 +14,8 @@ const AuthContextProvider = ({children}) => {
     
                 console.log(res.data);
                 setUser(res.data);
+                setFav(res.data.favRecipes);
+                // setFav(prev =>res.data.favorites)
                 setIsAuthenticated(true)
             } catch (error) {
                 console.log(error);
@@ -25,7 +28,7 @@ const AuthContextProvider = ({children}) => {
 
 
   return (
-    <AuthContext.Provider value={{user,setUser,isAuthenticated,setIsAuthenticated}}>
+    <AuthContext.Provider value={{user,setUser,isAuthenticated,setIsAuthenticated,fav,setFav}}>
         {children}
     </AuthContext.Provider>
   )

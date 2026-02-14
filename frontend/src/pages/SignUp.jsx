@@ -19,7 +19,7 @@ const SignUp = () => {
      try {
         const res = await instance.post('/users/signup',formData)
         toast.success(res?.data?.message);
-        navigate('/');
+        navigate('/login');
      } catch (error) {
         toast.error(error?.response?.data?.message);
      }

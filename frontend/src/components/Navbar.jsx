@@ -22,7 +22,7 @@ const Navbar = () => {
   }
   return (
 
-    <div className='w-full p-5  lg:flex lg:items-center lg:justify-between '>
+    <div className='w-full p-5  lg:flex lg:items-center lg:justify-between  '>
 
       
       {/* logo and hamburger */}
@@ -41,7 +41,8 @@ const Navbar = () => {
           </div>
           <NavLink to='/' className={(e) => e.isActive ? 'text-red-500' : ""} >Home</NavLink>
           <NavLink to='/about' className={(e) => e.isActive ? 'text-red-500' : ""} >About</NavLink>
-         {user && ( <NavLink to='/favorite' className={(e) => e.isActive ? 'text-red-500' : ""}>Favorite</NavLink>)}
+         {(user && !user?.isAuthor) && ( <NavLink to='/favorite' className={(e) => e.isActive ? 'text-red-500' : ""}>Favorite</NavLink>)}
+         {user?.isAuthor && (<NavLink to={'/create-recipe'} className={(e) => e.isActive ? 'text-red-500' : ""}>Create Recipe</NavLink>)}
           <NavLink to='/recipes' className={(e) => e.isActive ? 'text-red-500' : ""}>Recipes</NavLink>
 
           <div className='h-1/2 flex flex-col justify-end'>
@@ -55,20 +56,20 @@ const Navbar = () => {
 
      {/* Navbar */}
 
-      <div>
+      
 
-        <div className='hidden lg:flex gap-10 '>
+        <div className='hidden lg:flex gap-10 pl-50'>
           <NavLink to='/' className={(e) => e.isActive ? 'text-red-500' : ""} >Home</NavLink>
           <NavLink to='/about' className={(e) => e.isActive ? 'text-red-500' : ""} >About</NavLink>
           {user && (<NavLink to='/favorite' className={(e) => e.isActive ? 'text-red-500' : ""}>Favorite</NavLink>)}
+          {user?.isAuthor && (<NavLink to={'/create-recipe'} className={(e) => e.isActive ? 'text-red-500' : ""}>Create Recipe</NavLink>)}
           <NavLink to='/recipes' className={(e) => e.isActive ? 'text-red-500' : ""}>Recipes</NavLink>
         </div>
 
         
           
 
-      </div>
-
+      
       <div>
        {!user && (<motion.button 
           initial={{ y: 10 }}
@@ -77,14 +78,12 @@ const Navbar = () => {
           whileTap={{ scale: 0.9 }}
        onClick={() => navigate('login')} className='cursor-pointer hidden lg:block px-2.5 py-1.5 rounded-md bg-blue-500 text-white shadow hover:border-blue-500 hover:text-blue-500 hover:bg-white '>Login</motion.button>)}
       </div>
-      {user && (<div>
-      {user.isAuthor && (<motion.button 
-          initial={{ y: 10 }}
-          animate={{ y: 0 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-       onClick={() => navigate('recipes/create-recipe')} className='cursor-pointer hidden lg:block px-2.5 py-1.5 rounded-md bg-blue-500 text-white shadow hover:border-blue-500 hover:text-blue-500 hover:bg-white '>Create</motion.button>)}
+      {user && (<div className='flex items-center gap-2 '>
+      
+       {user.isAuthor && (<p className='text-xl hidden lg:block border border-green-500 px-4 py-2 text-green-500'>Admin Panel</p>)}
       </div>)}
+
+      
       
     </div>
   )

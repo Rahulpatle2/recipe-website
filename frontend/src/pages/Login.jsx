@@ -4,10 +4,11 @@ import { toast } from 'react-toastify';
 import { motion } from 'motion/react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
-
+  const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -18,7 +19,7 @@ const Login = () => {
             const res = await instance.post('/users/login',formData);
     
             toast.success(res.data.message);
-            navigate('/home')
+            navigate('/')
         } catch (error) {
             toast.error(error?.response?.data?.message)
         }

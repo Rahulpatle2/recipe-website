@@ -42,7 +42,7 @@ const Create = () => {
   // console.log(data);
   return (
     <div className='w-screen flex items-center justify-center'>
-      <form onSubmit={handleSubmit(SubmitHandler)} className='flex flex-col  gap-7 border p-12 lg:w-1/3 rounded shadow mt-5'>
+      <form onSubmit={handleSubmit(SubmitHandler)} className='flex flex-col  gap-7 border p-12 lg:w-1/3 rounded shadow mt-5' encType='multipart/form-data'>
         <h1 className='text-center text-3xl font-black pb-5'>Create Your Recipe</h1>
 
         <input type="text"

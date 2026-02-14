@@ -15,7 +15,14 @@ const SingleRecipe = () => {
   const [recipe,setRecipe] = useState(null);
   const navigate = useNavigate();
   const { id } = useParams();
+  const [toggle,setToggle] = useState(false)
+  
   // console.log(id)
+  // console.log(user.favRecipes);
+  // console.log(recipe);
+
+  // const checkRecipe = user.favRecipes.find((recipe) => recipe === id );
+  // console.log("recipe checked" + checkRecipe);
    useEffect(() => {
     // console.log(id);
     const fetchRecipe = async() =>{
@@ -23,6 +30,8 @@ const SingleRecipe = () => {
         const res = await instance.get(`/recipes/get-recipe/${id}`);
         console.log(res.data) 
         setRecipe(res.data);
+        // setFav(res.data.favRecipes)
+       
       } catch (error) {
         console.log(error)
       }
@@ -32,6 +41,7 @@ const SingleRecipe = () => {
   },[id]);
   
   // console.log(user.favRecipes)
+  //  console.log(user.favRecipes);
 
   
   // const recipe = data.find((r) => r._id === id);
@@ -88,10 +98,11 @@ const SingleRecipe = () => {
 
   const FavHandler = async() => {
     try {
+      
       const res = await instance.post(`/users/fav-recipe/${id}`);
   
       console.log(res.data);
-      setFav(prev => res.data)
+      setFav(prev => res.data.favorites);
       toast.success(res?.data?.message)
       console.log(fav);
     } catch (error) {
@@ -101,10 +112,14 @@ const SingleRecipe = () => {
 
   const UnFavHandler = async() => {
     try {
-      const res = await instance.post(`/fav-recipe-rem/${id}`)
+      // if(checkRecipe){
+      //    console.log("recipe already added!")
+      // }
+      const res = await instance.post(`/users/fav-recipe-rem/${id}`)
   
       console.log(res.data);
-      setFav("");
+      setFav(prev => res.data.favorites);
+      console.log(fav)
       toast.success(res?.data?.message)
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -118,6 +133,7 @@ const SingleRecipe = () => {
 const DeleteHandler = async() => {
   try {
     const res = await instance.delete(`/users/delete-recipe/${id}`);
+    console.log("chala")
     toast.success("recipe deleted successfully")
   } catch (error) {
     toast.error("something went wrong!")
@@ -126,8 +142,12 @@ const DeleteHandler = async() => {
 };
 
 
-// console.log(fav);
-
+console.log(fav);
+const check = fav.some((f) =>
+        f === id
+        
+      )
+      console.log(check);
 
   
   return recipe ? (<motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:1}}   className='flex flex-col lg:flex-row justify-center lg:gap-72 mt-5'>
@@ -136,8 +156,9 @@ const DeleteHandler = async() => {
     initial={{x:-50}} animate={{x:0}} transition={{duration:1}}
     className='flex flex-col  lg:w-1/3 ml-5 gap-5 shadow p-5 relative'>
     {user && (<div>
-        {user.favRecipes.find((f) =>
-        f._id === id
+        {fav.some((f) =>
+        f === id
+        
       ) ? (
          <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -189,7 +210,7 @@ const DeleteHandler = async() => {
    {user && (<div>
       {user.isAuthor && (<motion.form
     initial={{x:50}} animate={{x:0}} transition={{duration:1}}
-     onSubmit={handleSubmit(SubmitHandler)} className='flex flex-col m-8  gap-7 border p-12 lg:w-1/3 rounded shadow '>
+     onSubmit={handleSubmit(SubmitHandler)} className='flex flex-col m-8  gap-7 border p-12 lg:w-full rounded shadow '>
       <h1 className='text-center text-3xl font-black pb-5'>Update Your Recipe</h1>
 
       <input type="text"
